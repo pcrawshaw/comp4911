@@ -101,6 +101,7 @@ def udt_send(packet):
         return
 
     # Send the packet with UDP. Serialize the python object with json
+    global peer
     s = json.dumps(newpkt)
     sock = socket(AF_INET, SOCK_DGRAM)
     print "Sending", newpkt, "to", peer
@@ -129,6 +130,7 @@ def hasSeq(packet, seqnum):
 def rdt_rcv(timeout=None):
     # This will block for up to 'timeout' sec until there is a packet to read.
     # None means wait for ever.
+    global peer
     try:
         recvSock.settimeout(timeout)  # if None, no timeout
         data, sender = recvSock.recvfrom(2048)
