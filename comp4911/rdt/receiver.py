@@ -2,7 +2,7 @@
 
 #
 # Simulation of the RDT 2.2 protocol described in
-# section 3.4.1 of Computer Networking: A Top-Down Approach, Kurose-Ross, 6th edition
+# section 3.4.1 of Computer Networking: A Top-Down Approach, Kurose-Ross, 7th edition
 #
 import sys
 from sm import StateMachine
