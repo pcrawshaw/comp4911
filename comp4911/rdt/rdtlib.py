@@ -127,8 +127,8 @@ def hasSeq(packet, seqnum):
 # Receiver functions
 # Get a packet from the comm channel
 def rdt_rcv(timeout=None):
-    # This will block for up to 'timeout' sec until there is something in the 
-    # queue to get().  None means wait for ever.
+    # This will block for up to 'timeout' sec until there is a packet to read.
+    # None means wait for ever.
     try:
         recvSock.settimeout(timeout)  # if None, no timeout
         data, sender = recvSock.recvfrom(2048)
