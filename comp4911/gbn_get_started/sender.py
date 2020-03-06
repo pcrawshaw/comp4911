@@ -41,7 +41,9 @@ def sender_wait_above():
 def sender_wait_ack():
     global lastsndpkt, retrans, base
     print 'Sender in state WAIT_ACK'
-    packet = rdt_rcv()
+
+    # Wait to receive an ACK packet
+    packet = rdt_rcv(timeout=None)
 
     # TODO: These three error condtions could be collapsed into a single case
     if packet == None:    # Timeout!

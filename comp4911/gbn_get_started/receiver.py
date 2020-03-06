@@ -11,6 +11,7 @@ from rdtlib import udt_send, rdt_send, rdt_rcv, deliver_data, make_pkt, extract,
 
 # Globals
 expectedseqnum = 0
+sndpkt = make_pkt(type=ACK, seq=expectedseqnum)
 
 # Handle the receiver's 'Wait for call from below' states
 #
@@ -19,36 +20,34 @@ expectedseqnum = 0
 # 2. Packet is out-of-sequence
 # 3. Packet is OK
 def receiver_wait_below():
-    global expectedseqnum
+    global expectedseqnum, sndpkt
 
-    print 'Receiver in state WAIT_BELOW'
+    print 'Receiver in state WAIT_BELOW, expecting seqnum', expectedseqnum
     packet = rdt_rcv()
 
     # We have a good packet with the expected seqnum, so deliver data
     # to app layer and send an acknowledgement
-    if not iscorrupt(packet) and hasSeq(packet, expectedseqnum):
+    if (not iscorrupt(packet)) and hasSeq(packet, expectedseqnum):
 
          # Extract data and pass to application layer
          data = extract(packet)
          deliver_data(data)
 
          # Prepare an ACK pack for this seqnum
-         packet = make_pkt(type=ACK, seq=expectedseqnum)
+         print 'Receiver: packet OK, sending ACK for', expectedseqnum
+         sndpkt = make_pkt(type=ACK, seq=expectedseqnum)
 
          # Increment seqnum
          expectedseqnum += 1
-
-         print 'Receiver: packet OK, sending ACK for', expectedseqnum
     else:
          # The packet received is either corrupt or out-of-sequence,
-         # prepare an ACK packet with the currently expected sequence number
-         packet = make_pkt(type=ACK, seq=expectedseqnum)
+         # send the last ACK packet
 
          # TODO: print error message that indicates what is wrong
-         print 'Receiver: bad packet, sending ACK for', expectedseqnum
+         print 'Receiver: bad packet, sending last ACK'
 
     # Send the ACK packet to the sender
-    udt_send(packet)
+    udt_send(sndpkt)
 
     return 'WAIT_BELOW'
 
