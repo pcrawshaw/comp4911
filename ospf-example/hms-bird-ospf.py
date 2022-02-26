@@ -20,6 +20,25 @@
 
 # Confirm installation with bird --version
 
+# Run with sudo -E python hms-bird-ospf.py
+
+# Try the bird shell:
+#
+#   sudo birdc -s r1.ctl
+#
+# where r1.ctl is the control file for router r1, and so on
+#
+# Try some commands:
+#
+#   bird> show interfaces summary
+#   bird> show route
+#   bird> show ospf
+#   bird> show ospf interface
+#   bird> show ospf neighbors
+#   bird> show ospf lsadb
+#   bird> show ospf topology
+
+
 import os
 from mininet.cli import CLI
 from mininet.log import info, setLogLevel
