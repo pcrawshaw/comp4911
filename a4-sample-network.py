@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Sample network cerated uysing Mininet Python API
+# Sample network created using Mininet Python API
 
 # Initial code generated with Miniedit (~mininet/mininet/examples/miniedit.py)
 
